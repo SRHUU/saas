@@ -1,0 +1,56 @@
+@use "./space.scss" as s;
+@use "./var.scss" as var;
+
+
+.section {
+    display: flex;
+    justify-content: center;
+    padding: 0 s.space(4);
+}
+
+$contentSizeMap: (
+    descktop: 1100px,
+    laptop: 700px,
+    tablet: 900px,
+    mobile: 500px,   
+);
+
+.section__content {
+    max-width: 1200px;
+    width: 100%;
+    
+    @each $key, $value in var.$screenMap {
+
+        @media all and (width < $value) {
+            max-width: map-get($contentSizeMap, $key);
+
+            .ad__title {
+                max-width: calc(100% / 2);
+                width: 100%;
+            }
+        }
+    }   
+}
+
+.section__double {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+
+    @media all and (width < var.screen("laptop")) {
+        grid-template-columns: 1fr;
+    }
+}
+
+.section__content-footer {
+    max-width: 1200px;
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: s.space(5);
+
+    @media all and (width < var.screen("mobile")) {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        grid-template-rows: 1fr 1fr;
+    }
+}
